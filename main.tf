@@ -7,13 +7,15 @@ module "label" {
 
 # Kops domain
 module "domain" {
-  source    = "git::https://github.com/cloudposse/tf_domain.git?ref=master"
-  namespace = "${var.namespace}"
-  stage     = "${var.stage}"
-  name      = "${var.name}"
+  source               = "git::https://github.com/cloudposse/tf_domain.git?ref=master"
+  namespace            = "${var.namespace}"
+  stage                = "${var.stage}"
+  name                 = "${var.name}"
+  parent_dns_zone_id   = "${var.parent_dns_zone_id}"
+  parent_dns_zone_name = "${var.parent_dns_zone_name}"
 }
 
-# Kops bucket for manifests
+# Kops bucket for manifests (e.g. `config.foobar.example.com`)
 resource "aws_s3_bucket" "default" {
   bucket        = "${var.bucket_prefix}${module.domain.dns_zone}"
   acl           = "private"
