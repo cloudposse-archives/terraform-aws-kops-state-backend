@@ -19,7 +19,7 @@ module "domain" {
 
 # Kops bucket for manifests (e.g. `config.foobar.example.com`)
 resource "aws_s3_bucket" "default" {
-  bucket        = "${var.bucket_prefix}${module.domain.dns_zone}"
+  bucket        = "${var.bucket_prefix}${module.domain.fqdn}"
   acl           = "private"
   tags          = "${module.label.tags}"
   force_destroy = true
