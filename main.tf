@@ -1,3 +1,4 @@
+# Label & Tags (e.g. `example-dev-foobar`)
 module "label" {
   source    = "git::https://github.com/cloudposse/tf_label.git?ref=master"
   namespace = "${var.namespace}"
@@ -5,14 +6,15 @@ module "label" {
   name      = "${var.name}"
 }
 
-# Kops domain
+# Kops domain (e.g. `foobar.example.com`)
 module "domain" {
-  source               = "git::https://github.com/cloudposse/tf_domain.git?ref=master"
+  source               = "git::https://github.com/cloudposse/tf_domain.git?ref=support-parent-dns-zone-name"
   namespace            = "${var.namespace}"
   stage                = "${var.stage}"
   name                 = "${var.name}"
   parent_dns_zone_id   = "${var.parent_dns_zone_id}"
   parent_dns_zone_name = "${var.parent_dns_zone_name}"
+  ttl                  = 60
 }
 
 # Kops bucket for manifests (e.g. `config.foobar.example.com`)
