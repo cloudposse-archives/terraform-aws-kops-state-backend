@@ -12,8 +12,8 @@ module "domain" {
   namespace            = "${var.namespace}"
   stage                = "${var.stage}"
   name                 = "${var.name}"
-  parent_dns_zone_id   = "${var.parent_dns_zone_id}"
-  parent_dns_zone_name = "${var.parent_dns_zone_name}"
+  parent_zone_id       = "${var.parent_zone_id}"
+  parent_zone_name     = "${var.parent_zone_name}"
   ttl                  = 60
 }
 
