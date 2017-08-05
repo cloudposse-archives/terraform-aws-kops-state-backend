@@ -8,13 +8,15 @@ module "label" {
 
 # Kops domain (e.g. `foobar.example.com`)
 module "domain" {
-  source               = "git::https://github.com/cloudposse/tf_domain.git?ref=support-parent-dns-zone-name"
-  namespace            = "${var.namespace}"
-  stage                = "${var.stage}"
-  name                 = "${var.name}"
-  parent_zone_id       = "${var.parent_zone_id}"
-  parent_zone_name     = "${var.parent_zone_name}"
-  ttl                  = 60
+  source    = "git::https://github.com/cloudposse/tf_domain.git?ref=support-parent-dns-zone-name"
+  namespace = "${var.namespace}"
+  stage     = "${var.stage}"
+
+  # the following line deliberately maps the `namespace` to the `domain.name` (get it?)
+  name             = "${var.namespace}"
+  parent_zone_id   = "${var.parent_zone_id}"
+  parent_zone_name = "${var.parent_zone_name}"
+  ttl              = 60
 }
 
 # Kops bucket for manifests (e.g. `config.foobar.example.com`)
