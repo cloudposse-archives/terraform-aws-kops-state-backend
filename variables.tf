@@ -1,5 +1,5 @@
 variable "namespace" {
-  default = "kops"
+  default = "cluster"
 }
 
 variable "stage" {
@@ -7,7 +7,7 @@ variable "stage" {
 }
 
 variable "name" {
-  default = "cluster"
+  default = "kops"
 }
 
 variable "parent_zone_id" {
