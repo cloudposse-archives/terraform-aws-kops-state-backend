@@ -11,7 +11,7 @@ output "zone_id" {
 }
 
 output "zone_name" {
-  value = "${module.domain.fqdn}"
+  value = "${module.domain.zone_name}"
 }
 
 output "bucket_name" {
