@@ -15,7 +15,7 @@ output "zone_name" {
 }
 
 output "bucket_name" {
-  value = "${aws_s3_bucket.default.name}"
+  value = "${aws_s3_bucket.default.bucket}"
 }
 
 output "id" {
