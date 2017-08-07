@@ -18,8 +18,8 @@ variable "parent_zone_name" {
   default = ""
 }
 
-variable "bucket_prefix" {
-  default = "config."
+variable "bucket_name" {
+  default = "config.$${zone_name}"
 }
 
 variable "ttl" {

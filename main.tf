@@ -19,9 +19,22 @@ module "domain" {
   ttl              = 60
 }
 
+data "template_file" "bucket_name" {
+  template = "${replace(var.bucket_name, "$$$$", "$")}"
+
+  vars {
+    namespace        = "${var.namespace}"
+    name             = "${var.name}"
+    stage            = "${var.stage}"
+    id               = "${module.label.id}"
+    zone_name        = "${module.domain.zone_name}"
+    parent_zone_name = "${module.domain.parent_zone_name}"
+  }
+}
+
 # Kops bucket for manifests (e.g. `config.foobar.example.com`)
 resource "aws_s3_bucket" "default" {
-  bucket        = "${var.bucket_prefix}${module.domain.fqdn}"
+  bucket        = "${data.template_file.bucket_name.rendered}"
   acl           = "private"
   tags          = "${module.label.tags}"
   force_destroy = true
