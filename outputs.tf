@@ -14,7 +14,7 @@ output "zone_name" {
   value = "${module.domain.fqdn}"
 }
 
-output "bucket" {
+output "bucket_name" {
   value = "${aws_s3_bucket.default.name}"
 }
 
