@@ -18,6 +18,10 @@ output "bucket_name" {
   value = "${aws_s3_bucket.default.bucket}"
 }
 
+output "bucket_region" {
+  value = "${aws_s3_bucket.default.region}"
+}
+
 output "id" {
   value = "${module.label.id}"
 }
