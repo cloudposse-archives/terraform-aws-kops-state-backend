@@ -1,6 +1,6 @@
 # Label & Tags (e.g. `example-dev-foobar`)
 module "label" {
-  source    = "git::https://github.com/cloudposse/tf_label.git?ref=master"
+  source    = "git::https://github.com/cloudposse/tf_label.git?ref=tags/0.1.0"
   namespace = "${var.namespace}"
   stage     = "${var.stage}"
   name      = "${var.name}"
@@ -8,7 +8,7 @@ module "label" {
 
 # Kops domain (e.g. `foobar.example.com`)
 module "domain" {
-  source    = "git::https://github.com/cloudposse/tf_domain.git?ref=support-parent-dns-zone-name"
+  source    = "git::https://github.com/cloudposse/tf_domain.git?ref=tags/0.2.0"
   namespace = "${var.namespace}"
   name      = "${var.name}"
   stage     = "${var.stage}"
