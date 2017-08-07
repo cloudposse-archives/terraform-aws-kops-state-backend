@@ -10,10 +10,10 @@ module "label" {
 module "domain" {
   source    = "git::https://github.com/cloudposse/tf_domain.git?ref=support-parent-dns-zone-name"
   namespace = "${var.namespace}"
+  name      = "${var.name}"
   stage     = "${var.stage}"
 
-  # the following line deliberately maps the `namespace` to the `domain.name` (get it?)
-  name             = "${var.namespace}"
+  zone_name        = "$${namespace}.$${parent_zone_name}"
   parent_zone_id   = "${var.parent_zone_id}"
   parent_zone_name = "${var.parent_zone_name}"
   ttl              = 60
