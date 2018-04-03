@@ -14,7 +14,7 @@ This example will create a DNS zone called `kops.cloudxl.net` and delegate it fr
 
 It will also create an S3 bucket with the name `cp-prod-kops-state` for storing `kops` manifests.
 
-```
+```hcl
 module "kops" {
   source           = "git::https://github.com/cloudposse/terraform-aws-kops-state-backend.git?ref=master"
   namespace        = "cp"
@@ -33,12 +33,12 @@ module "kops" {
 
 To check that the created `kops` DNS zone has been tagged correctly, run
 
-```bash
+```sh
 aws route53 list-tags-for-resources --resource-type hostedzone --resource-ids Z58RWQWFVU4HT
 ```
 
 
-```json
+```js
 {
     "ResourceTagSets": [
         {
