@@ -1,27 +1,63 @@
 variable "namespace" {
-  default = "cluster"
+  type        = "string"
+  description = "Namespace (e.g. `cp` or `cloudposse`)"
 }
 
 variable "stage" {
-  default = "dev"
+  type        = "string"
+  description = "Stage (e.g. `prod`, `dev`, `staging`)"
 }
 
 variable "name" {
-  default = "kops"
+  type        = "string"
+  default     = "kops"
+  description = "Name (e.g. `kops`)"
+}
+
+variable "delimiter" {
+  type        = "string"
+  default     = "-"
+  description = "Delimiter to be used between `namespace`, `stage`, `name`, and `attributes`"
+}
+
+variable "attributes" {
+  type        = "list"
+  default     = ["state"]
+  description = "Additional attributes (e.g. `state`)"
+}
+
+variable "tags" {
+  type        = "map"
+  default     = {}
+  description = "Additional tags (e.g. map(`Cluster`,`XYZ`)"
+}
+
+variable "zone_name" {
+  type        = "string"
+  default     = "$${name}.$${parent_zone_name}"
+  description = "Template for Kops DNS zone name"
 }
 
 variable "parent_zone_id" {
-  default = ""
+  type        = "string"
+  default     = ""
+  description = "Parent DNS zone ID"
 }
 
 variable "parent_zone_name" {
-  default = ""
+  type        = "string"
+  default     = "cloudxl.net"
+  description = "Parent DNS zone name (e.g. `domain.com`)"
 }
 
-variable "bucket_name" {
-  default = "config.$${zone_name}"
+variable "region" {
+  type        = "string"
+  description = "AWS Region the S3 bucket should reside in"
+  default     = "us-east-1"
 }
 
-variable "ttl" {
-  default = "300"
+variable "acl" {
+  type        = "string"
+  description = "The canned ACL to apply to the S3 bucket"
+  default     = "private"
 }

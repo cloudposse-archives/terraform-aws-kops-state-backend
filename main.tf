@@ -1,51 +1,46 @@
-# Label & Tags (e.g. `example-dev-foobar`)
+# Label & Tags (e.g. `cp-dev-k8s`)
 module "label" {
-  source    = "git::https://github.com/cloudposse/tf_label.git?ref=tags/0.1.0"
-  namespace = "${var.namespace}"
-  stage     = "${var.stage}"
-  name      = "${var.name}"
+  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.3.3"
+  namespace  = "${var.namespace}"
+  name       = "${var.name}"
+  stage      = "${var.stage}"
+  delimiter  = "${var.delimiter}"
+  attributes = "${var.attributes}"
+  tags       = "${var.tags}"
 }
 
-# Kops domain (e.g. `foobar.example.com`)
+# Kops domain (e.g. `kops.domain.com`)
 module "domain" {
-  source    = "git::https://github.com/cloudposse/tf_domain.git?ref=tags/0.2.0"
-  namespace = "${var.namespace}"
-  name      = "${var.name}"
-  stage     = "${var.stage}"
+  source     = "git::https://github.com/cloudposse/terraform-aws-route53-cluster-zone.git?ref=tags/0.2.3"
+  namespace  = "${var.namespace}"
+  name       = "${var.name}"
+  stage      = "${var.stage}"
+  delimiter  = "${var.delimiter}"
+  attributes = "${var.attributes}"
+  tags       = "${var.tags}"
 
-  zone_name        = "$${namespace}.$${parent_zone_name}"
+  zone_name        = "${var.zone_name}"
   parent_zone_id   = "${var.parent_zone_id}"
   parent_zone_name = "${var.parent_zone_name}"
-  ttl              = 60
 }
 
-data "template_file" "bucket_name" {
-  template = "${replace(var.bucket_name, "$$$$", "$")}"
-
-  vars {
-    namespace        = "${var.namespace}"
-    name             = "${var.name}"
-    stage            = "${var.stage}"
-    id               = "${module.label.id}"
-    zone_name        = "${module.domain.zone_name}"
-    parent_zone_name = "${module.domain.parent_zone_name}"
-  }
-}
-
-# Kops bucket for manifests (e.g. `config.foobar.example.com`)
 resource "aws_s3_bucket" "default" {
-  bucket        = "${data.template_file.bucket_name.rendered}"
-  acl           = "private"
-  tags          = "${module.label.tags}"
-  force_destroy = true
+  bucket        = "${module.label.id}"
+  acl           = "${var.acl}"
+  region        = "${var.region}"
+  force_destroy = false
 
   versioning {
     enabled = true
   }
 
-  tags = "${module.label.tags}"
-
-  lifecycle {
-    create_before_destroy = true
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
   }
+
+  tags = "${module.label.tags}"
 }
