@@ -34,7 +34,7 @@ module "kops" {
 To check that the created `kops` DNS zone has been tagged correctly, run
 
 ```bash
-aws route53 list-tags-for-resources --resource-type hostedzone --resource-ids Z2P8BG2BJMCYDV
+aws route53 list-tags-for-resources --resource-type hostedzone --resource-ids Z58RWQWFVU4HT
 ```
 
 
