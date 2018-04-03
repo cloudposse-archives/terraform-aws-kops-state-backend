@@ -35,7 +35,7 @@ module "kops" {
 ## Variables
 
 __NOTE:__ One of `parent_zone_name` or `parent_zone_id` is required, but not both.
-The module will lookup the Parent Zone by either name or ID.
+The module will lookup the parent zone by either name or ID.
 
 
 |  Name                    |  Default                          |  Description                                                                      | Required |
@@ -50,7 +50,7 @@ The module will lookup the Parent Zone by either name or ID.
 | `tags`                   | `{}`                              | Additional tags  (_e.g._ `map("BusinessUnit","XYZ")`                              | No       |
 | `delimiter`              | `-`                               | Delimiter to be used between `namespace`, `stage`, `name`, and `attributes`       | No       |
 | `acl`                    | `private`                         | The canned ACL to apply to the S3 bucket                                          | No       |
-| `zone_name`              | `$${name}.$${parent_zone_name}`   | Template for Kops DNS zone name                                                   | No       |
+| `zone_name`              | `$${name}.$${parent_zone_name}`   | Template for `kops` DNS zone name                                                   | No       |
 
 
 ## Outputs

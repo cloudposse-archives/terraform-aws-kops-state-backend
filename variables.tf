@@ -35,7 +35,7 @@ variable "tags" {
 variable "zone_name" {
   type        = "string"
   default     = "$${name}.$${parent_zone_name}"
-  description = "Template for Kops DNS zone name"
+  description = "Template for `kops` DNS zone name"
 }
 
 variable "parent_zone_id" {
