@@ -61,3 +61,9 @@ variable "acl" {
   description = "The canned ACL to apply to the S3 bucket"
   default     = "private"
 }
+
+variable "force_destroy" {
+  type        = "string"
+  description = "A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without errors. These objects are not recoverable"
+  default     = false
+}

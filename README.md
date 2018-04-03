@@ -50,7 +50,8 @@ The module will lookup the parent zone by either name or ID.
 | `tags`                   | `{}`                              | Additional tags  (_e.g._ `map("BusinessUnit","XYZ")`                              | No       |
 | `delimiter`              | `-`                               | Delimiter to be used between `namespace`, `stage`, `name`, and `attributes`       | No       |
 | `acl`                    | `private`                         | The canned ACL to apply to the S3 bucket                                          | No       |
-| `zone_name`              | `$${name}.$${parent_zone_name}`   | Template for `kops` DNS zone name                                                   | No       |
+| `zone_name`              | `$${name}.$${parent_zone_name}`   | Template for `kops` DNS zone name                                                 | No       |
+| `force_destroy`          | `false`                           | A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without errors   | No       |
 
 
 ## Outputs
