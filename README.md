@@ -31,6 +31,8 @@ module "kops" {
 
 ![kops-state-backend](images/kops-state-backend.png)
 
+<br/>
+
 To check that the created `kops` DNS zone has been tagged correctly, run
 
 ```sh
@@ -43,7 +45,7 @@ aws route53 list-tags-for-resources --resource-type hostedzone --resource-ids Z5
     "ResourceTagSets": [
         {
             "ResourceType": "hostedzone",
-            "ResourceId": "Z2P8BG2BJMCYDV",
+            "ResourceId": "Z58RWQWFVU4HT",
             "Tags": [
                 {
                     "Key": "Cluster",
