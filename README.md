@@ -57,10 +57,10 @@ The module will lookup the Parent Zone by either name or ID.
 
 | Name                   | Description               |
 |:-----------------------|:--------------------------|
-| `parent_zone_id`       | Parent Zone ID            |
-| `parent_zone_name`     | Parent Zone name          |
-| `zone_id`              | `kops` Zone ID            |
-| `zone_name`            | `kops` Zone name          |
+| `parent_zone_id`       | Parent zone ID            |
+| `parent_zone_name`     | Parent zone name          |
+| `zone_id`              | `kops` zone ID            |
+| `zone_name`            | `kops` zone name          |
 | `bucket_name`          | S3 bucket name            |
 | `bucket_region`        | S3 bucket region          |
 | `bucket_domain_name`   | S3 bucket domain name     |
