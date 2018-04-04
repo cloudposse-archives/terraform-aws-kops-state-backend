@@ -16,8 +16,8 @@ variable "bucket_name" {
 
 variable "cluster_name" {
   type        = "string"
-  default     = "kops"
-  description = "Kops cluster name (e.g. `kops` or `cluster`)"
+  default     = "us-east-1"
+  description = "Kops cluster name (e.g. `us-east-1` or `cluster-1`)"
 }
 
 variable "delimiter" {
@@ -40,7 +40,7 @@ variable "tags" {
 
 variable "zone_name" {
   type        = "string"
-  default     = "$${cluster_name}.$${parent_zone_name}"
+  default     = "$${name}.$${parent_zone_name}"
   description = "Template for the DNS zone name"
 }
 

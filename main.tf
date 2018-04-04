@@ -3,10 +3,21 @@ data "template_file" "zone_name" {
 
   vars {
     namespace        = "${var.namespace}"
-    cluster_name     = "${var.cluster_name}"
+    name             = "${var.cluster_name}"
     stage            = "${var.stage}"
     parent_zone_name = "${var.parent_zone_name}"
   }
+}
+
+locals {
+  tags = "${
+      merge(
+        var.tags,
+        map(
+          "Cluster", "${data.template_file.zone_name.rendered}"
+        )
+      )
+    }"
 }
 
 # Kops domain (e.g. `kops.domain.com`)
@@ -20,15 +31,7 @@ module "domain" {
   zone_name        = "${var.zone_name}"
   parent_zone_id   = "${var.parent_zone_id}"
   parent_zone_name = "${var.parent_zone_name}"
-
-  tags = "${
-      merge(
-        var.tags,
-        map(
-          "Cluster", "${data.template_file.zone_name.rendered}"
-        )
-      )
-    }"
+  tags             = "${local.tags}"
 }
 
 # Label & Tags
@@ -39,15 +42,7 @@ module "s3_label" {
   stage      = "${var.stage}"
   delimiter  = "${var.delimiter}"
   attributes = "${var.attributes}"
-
-  tags = "${
-      merge(
-        var.tags,
-        map(
-          "Cluster", "${data.template_file.zone_name.rendered}"
-        )
-      )
-    }"
+  tags       = "${local.tags}"
 }
 
 resource "aws_s3_bucket" "default" {
