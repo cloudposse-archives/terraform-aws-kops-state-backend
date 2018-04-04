@@ -10,17 +10,17 @@ The module supports the following:
 
 ## Usage
 
-This example will create a DNS zone called `kops.cloudxl.net` and delegate it from the parent zone `cloudxl.net` by setting `NS` and `SOA` records in the parent zone.
+This example will create a DNS zone called `us-east-1.cloudxl.net` and delegate it from the parent zone `cloudxl.net` by setting `NS` and `SOA` records in the parent zone.
 
-It will also create an S3 bucket with the name `cp-prod-kops-state` for storing `kops` manifests.
+It will also create an S3 bucket with the name `cp-prod-kops-state` for storing `kops` state.
 
 ```hcl
 module "kops" {
   source           = "git::https://github.com/cloudposse/terraform-aws-kops-state-backend.git?ref=master"
   namespace        = "cp"
   stage            = "prod"
-  name             = "kops"
-  attributes       = ["state"]
+  bucket_name      = "kops-state"
+  cluster_name     = "us-east-1"
   parent_zone_name = "cloudxl.net"
   zone_name        = "$${name}.$${parent_zone_name}"
   region           = "us-east-1"
@@ -33,23 +33,24 @@ module "kops" {
 
 <br/>
 
-To check that the created `kops` DNS zone has been tagged correctly, run
+To verify that the created `kops` DNS zone has been tagged correctly, run
 
 ```sh
-aws route53 list-tags-for-resources --resource-type hostedzone --resource-ids Z58RWQWFVU4HT
+aws route53 list-tags-for-resources --resource-type hostedzone --resource-ids Z27EGVGENRTTZZ
 ```
 
 
 ```js
 {
+{
     "ResourceTagSets": [
         {
             "ResourceType": "hostedzone",
-            "ResourceId": "Z58RWQWFVU4HT",
+            "ResourceId": "Z27EGVGENRTTZZ",
             "Tags": [
                 {
                     "Key": "Cluster",
-                    "Value": "kops.cloudxl.net"
+                    "Value": "us-east-1.cloudxl.net"
                 },
                 {
                     "Key": "Stage",
@@ -61,7 +62,7 @@ aws route53 list-tags-for-resources --resource-type hostedzone --resource-ids Z5
                 },
                 {
                     "Key": "Name",
-                    "Value": "cp-prod-kops-state"
+                    "Value": "cp-prod-us-east-1"
                 }
             ]
         }
@@ -76,20 +77,21 @@ __NOTE:__ One of `parent_zone_name` or `parent_zone_id` is required, but not bot
 The module will lookup the parent zone by either name or ID.
 
 
-|  Name                    |  Default                          |  Description                                                                      | Required |
-|:-------------------------|:----------------------------------|:----------------------------------------------------------------------------------|:--------:|
-| `namespace`              | ``                                | Namespace (_e.g._ `cp` or `cloudposse`)                                           | Yes      |
-| `stage`                  | ``                                | Stage (_e.g._ `prod`, `dev`, `staging`)                                           | Yes      |
-| `region`                 | `us-east-1`                       | AWS Region the S3 bucket should reside in                                         | Yes      |
-| `parent_zone_name`       | ``                                | Parent DNS zone name (e.g. `domain.com`). Required if `parent_zone_id` is not provided    | Yes      |
-| `parent_zone_id`         | ``                                | Parent DNS zone ID. Required if `parent_zone_name` is not provided                | Yes      |
-| `name`                   | `kops`                            | Name  (_e.g._ `kops`)                                                             | No       |
-| `attributes`             | `["state"]`                       | Additional attributes (_e.g._ `state`)                                            | No       |
-| `tags`                   | `{}`                              | Additional tags  (_e.g._ `map("BusinessUnit","XYZ")`                              | No       |
-| `delimiter`              | `-`                               | Delimiter to be used between `namespace`, `stage`, `name`, and `attributes`       | No       |
-| `acl`                    | `private`                         | The canned ACL to apply to the S3 bucket                                          | No       |
-| `zone_name`              | `$${name}.$${parent_zone_name}`   | Template for `kops` DNS zone name                                                 | No       |
-| `force_destroy`          | `false`                           | A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without errors   | No       |
+|  Name                    |  Default                                 |  Description                                                                      | Required |
+|:-------------------------|:-----------------------------------------|:----------------------------------------------------------------------------------|:--------:|
+| `namespace`              | ``                                       | Namespace (_e.g._ `cp` or `cloudposse`)                                           | Yes      |
+| `stage`                  | ``                                       | Stage (_e.g._ `prod`, `dev`, `staging`)                                           | Yes      |
+| `region`                 | `us-east-1`                              | AWS Region the S3 bucket should reside in                                         | Yes      |
+| `parent_zone_name`       | ``                                       | Parent DNS zone name (e.g. `domain.com`). Required if `parent_zone_id` is not provided    | Yes      |
+| `parent_zone_id`         | ``                                       | Parent DNS zone ID. Required if `parent_zone_name` is not provided                | Yes      |
+| `bucket_name`            | `kops-state`                             | S3 bucket name (_e.g._ `kops-state`)                                              | Yes      |
+| `cluster_name`           | `us-east-1`                              | Kops cluster name (_e.g._ `us-east-1` or `cluster-1`)                             | Yes      |
+| `attributes`             | `[]`                                     | Additional attributes (_e.g._ `1`)                                                | No       |
+| `tags`                   | `{}`                                     | Additional tags  (_e.g._ `map("BusinessUnit","XYZ")`                              | No       |
+| `delimiter`              | `-`                                      | Delimiter to be used between `namespace`, `stage`, `name`, and `attributes`       | No       |
+| `acl`                    | `private`                                | The canned ACL to apply to the S3 bucket                                          | No       |
+| `zone_name`              | `$${name}.$${parent_zone_name}`          | Template for the DNS zone name                                                    | No       |
+| `force_destroy`          | `false`                                  | A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without errors   | No       |
 
 
 ## Outputs
@@ -98,8 +100,8 @@ The module will lookup the parent zone by either name or ID.
 |:-----------------------|:--------------------------|
 | `parent_zone_id`       | Parent zone ID            |
 | `parent_zone_name`     | Parent zone name          |
-| `zone_id`              | `kops` zone ID            |
-| `zone_name`            | `kops` zone name          |
+| `zone_id`              | `kops` cluster zone ID    |
+| `zone_name`            | `kops` cluster zone name  |
 | `bucket_name`          | S3 bucket name            |
 | `bucket_region`        | S3 bucket region          |
 | `bucket_domain_name`   | S3 bucket domain name     |
