@@ -3,36 +3,17 @@ data "template_file" "zone_name" {
 
   vars {
     namespace        = "${var.namespace}"
-    name             = "${var.name}"
+    cluster_name     = "${var.cluster_name}"
     stage            = "${var.stage}"
     parent_zone_name = "${var.parent_zone_name}"
   }
-}
-
-# Label & Tags
-module "label" {
-  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.3.3"
-  namespace  = "${var.namespace}"
-  name       = "${var.name}"
-  stage      = "${var.stage}"
-  delimiter  = "${var.delimiter}"
-  attributes = "${var.attributes}"
-
-  tags = "${
-      merge(
-        var.tags,
-        map(
-          "Cluster", "${data.template_file.zone_name.rendered}"
-        )
-      )
-    }"
 }
 
 # Kops domain (e.g. `kops.domain.com`)
 module "domain" {
   source           = "git::https://github.com/cloudposse/terraform-aws-route53-cluster-zone.git?ref=tags/0.2.3"
   namespace        = "${var.namespace}"
-  name             = "${var.name}"
+  name             = "${var.cluster_name}"
   stage            = "${var.stage}"
   delimiter        = "${var.delimiter}"
   attributes       = "${var.attributes}"
@@ -50,8 +31,27 @@ module "domain" {
     }"
 }
 
+# Label & Tags
+module "s3_label" {
+  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.3.3"
+  namespace  = "${var.namespace}"
+  name       = "${var.bucket_name}"
+  stage      = "${var.stage}"
+  delimiter  = "${var.delimiter}"
+  attributes = "${var.attributes}"
+
+  tags = "${
+      merge(
+        var.tags,
+        map(
+          "Cluster", "${data.template_file.zone_name.rendered}"
+        )
+      )
+    }"
+}
+
 resource "aws_s3_bucket" "default" {
-  bucket        = "${module.label.id}"
+  bucket        = "${module.s3_label.id}"
   acl           = "${var.acl}"
   region        = "${var.region}"
   force_destroy = "${var.force_destroy}"
@@ -68,5 +68,5 @@ resource "aws_s3_bucket" "default" {
     }
   }
 
-  tags = "${module.label.tags}"
+  tags = "${module.s3_label.tags}"
 }

@@ -8,10 +8,16 @@ variable "stage" {
   description = "Stage (e.g. `prod`, `dev`, `staging`)"
 }
 
-variable "name" {
+variable "bucket_name" {
+  type        = "string"
+  default     = "kops-state"
+  description = "S3 bucket name (e.g. `kops-state`)"
+}
+
+variable "cluster_name" {
   type        = "string"
   default     = "kops"
-  description = "Name (e.g. `kops`)"
+  description = "Kops cluster name (e.g. `kops` or `cluster`)"
 }
 
 variable "delimiter" {
@@ -22,8 +28,8 @@ variable "delimiter" {
 
 variable "attributes" {
   type        = "list"
-  default     = ["state"]
-  description = "Additional attributes (e.g. `state`)"
+  default     = []
+  description = "Additional attributes (e.g. `1`)"
 }
 
 variable "tags" {
@@ -34,8 +40,8 @@ variable "tags" {
 
 variable "zone_name" {
   type        = "string"
-  default     = "$${name}.$${parent_zone_name}"
-  description = "Template for `kops` DNS zone name"
+  default     = "$${cluster_name}.$${parent_zone_name}"
+  description = "Template for the DNS zone name"
 }
 
 variable "parent_zone_id" {
@@ -46,7 +52,7 @@ variable "parent_zone_id" {
 
 variable "parent_zone_name" {
   type        = "string"
-  default     = "cloudxl.net"
+  default     = ""
   description = "Parent DNS zone name (e.g. `domain.com`)"
 }
 
