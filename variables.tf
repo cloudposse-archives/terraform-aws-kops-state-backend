@@ -8,10 +8,10 @@ variable "stage" {
   description = "Stage (e.g. `prod`, `dev`, `staging`)"
 }
 
-variable "bucket_name" {
+variable "name" {
   type        = "string"
   default     = "kops-state"
-  description = "S3 bucket name (e.g. `kops-state`)"
+  description = "Name (e.g. `kops-state`)"
 }
 
 variable "cluster_name" {
