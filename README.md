@@ -19,7 +19,7 @@ module "kops" {
   source           = "git::https://github.com/cloudposse/terraform-aws-kops-state-backend.git?ref=master"
   namespace        = "cp"
   stage            = "prod"
-  bucket_name      = "kops-state"
+  name             = "kops-state"
   cluster_name     = "us-east-1"
   parent_zone_name = "cloudxl.net"
   zone_name        = "$${name}.$${parent_zone_name}"
@@ -84,7 +84,7 @@ The module will lookup the parent zone by either name or ID.
 | `region`                 | `us-east-1`                              | AWS Region the S3 bucket should reside in                                         | Yes      |
 | `parent_zone_name`       | ``                                       | Parent DNS zone name (e.g. `domain.com`). Required if `parent_zone_id` is not provided    | Yes      |
 | `parent_zone_id`         | ``                                       | Parent DNS zone ID. Required if `parent_zone_name` is not provided                | Yes      |
-| `bucket_name`            | `kops-state`                             | S3 bucket name (_e.g._ `kops-state`)                                              | Yes      |
+| `name`                   | `kops-state`                             | S3 bucket name (_e.g._ `kops-state`)                                              | Yes      |
 | `cluster_name`           | `us-east-1`                              | Kops cluster name (_e.g._ `us-east-1` or `cluster-1`)                             | Yes      |
 | `attributes`             | `[]`                                     | Additional attributes (_e.g._ `1`)                                                | No       |
 | `tags`                   | `{}`                                     | Additional tags  (_e.g._ `map("BusinessUnit","XYZ")`                              | No       |
