@@ -27,6 +27,11 @@ It's 100% Open Source and licensed under the [APACHE2](LICENSE).
 
 
 
+## Screenshots
+
+
+![kops-state-backend](images/kops-state-backend.png)
+*Example of outputs from the module after running `terraform apply`*
 
 
 ## Usage
@@ -47,10 +52,6 @@ module "kops" {
   region           = "us-east-1"
 }
 ```
-
-<br/>
-
-![kops-state-backend](images/kops-state-backend.png)
 
 <br/>
 
