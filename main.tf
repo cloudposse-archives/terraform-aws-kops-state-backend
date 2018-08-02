@@ -22,7 +22,7 @@ locals {
 
 # Kops domain (e.g. `kops.domain.com`)
 module "domain" {
-  source           = "git::https://github.com/cloudposse/terraform-aws-route53-cluster-zone.git?ref=tags/0.2.3"
+  source           = "git::https://github.com/cloudposse/terraform-aws-route53-cluster-zone.git?ref=tags/0.2.5"
   namespace        = "${var.namespace}"
   name             = "${var.cluster_name}"
   stage            = "${var.stage}"
@@ -32,9 +32,9 @@ module "domain" {
   parent_zone_id   = "${var.parent_zone_id}"
   parent_zone_name = "${var.parent_zone_name}"
   tags             = "${local.tags}"
+  enabled          = "${var.domain_enabled}"
 }
 
-# Label & Tags
 module "s3_label" {
   source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.3.3"
   namespace  = "${var.namespace}"

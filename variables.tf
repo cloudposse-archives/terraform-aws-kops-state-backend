@@ -1,6 +1,6 @@
 variable "namespace" {
   type        = "string"
-  description = "Namespace (e.g. `cp` or `cloudposse`)"
+  description = "Namespace (e.g. `eg` or `cp`)"
 }
 
 variable "stage" {
@@ -72,4 +72,9 @@ variable "force_destroy" {
   type        = "string"
   description = "A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without errors. These objects are not recoverable"
   default     = false
+}
+
+variable "domain_enabled" {
+  default     = "true"
+  description = "Set to false to prevent the module from creating a DNS Zone for the kops domain"
 }

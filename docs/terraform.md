@@ -7,9 +7,10 @@
 | attributes | Additional attributes (e.g. `1`) | list | `<list>` | no |
 | cluster_name | Kops cluster name (e.g. `us-east-1` or `cluster-1`) | string | `us-east-1` | no |
 | delimiter | Delimiter to be used between `namespace`, `stage`, `name`, and `attributes` | string | `-` | no |
+| domain_enabled | Set to false to prevent the module from creating a DNS Zone for the kops domain | string | `true` | no |
 | force_destroy | A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without errors. These objects are not recoverable | string | `false` | no |
 | name | Name (e.g. `kops-state`) | string | `kops-state` | no |
-| namespace | Namespace (e.g. `cp` or `cloudposse`) | string | - | yes |
+| namespace | Namespace (e.g. `eg` or `cp`) | string | - | yes |
 | parent_zone_id | Parent DNS zone ID | string | `` | no |
 | parent_zone_name | Parent DNS zone name (e.g. `domain.com`) | string | `` | no |
 | region | AWS Region the S3 bucket should reside in | string | `us-east-1` | no |
