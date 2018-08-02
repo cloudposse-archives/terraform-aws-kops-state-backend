@@ -75,6 +75,7 @@ variable "force_destroy" {
 }
 
 variable "domain_enabled" {
+  type        = "string"
   default     = "true"
-  description = "Set to false to prevent the module from creating a DNS Zone for the kops domain"
+  description = "A boolean that determines whether a DNS Zone for the kops domain is created"
 }
