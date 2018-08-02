@@ -44,11 +44,11 @@ It will also create an S3 bucket with the name `cp-prod-kops-state` for storing 
 ```hcl
 module "kops" {
   source           = "git::https://github.com/cloudposse/terraform-aws-kops-state-backend.git?ref=master"
-  namespace        = "cp"
+  namespace        = "eg"
   stage            = "prod"
   name             = "kops-state"
   cluster_name     = "us-east-1"
-  parent_zone_name = "cloudxl.net"
+  parent_zone_name = "domain.com"
   zone_name        = "$${name}.$${parent_zone_name}"
   region           = "us-east-1"
 }
@@ -73,7 +73,7 @@ aws route53 list-tags-for-resources --resource-type hostedzone --resource-ids Z2
             "Tags": [
                 {
                     "Key": "Cluster",
-                    "Value": "us-east-1.cloudxl.net"
+                    "Value": "us-east-1.domain.com"
                 },
                 {
                     "Key": "Stage",
@@ -85,7 +85,7 @@ aws route53 list-tags-for-resources --resource-type hostedzone --resource-ids Z2
                 },
                 {
                     "Key": "Name",
-                    "Value": "cp-prod-us-east-1"
+                    "Value": "eg-prod-us-east-1"
                 }
             ]
         }
@@ -116,9 +116,10 @@ Available targets:
 | attributes | Additional attributes (e.g. `1`) | list | `<list>` | no |
 | cluster_name | Kops cluster name (e.g. `us-east-1` or `cluster-1`) | string | `us-east-1` | no |
 | delimiter | Delimiter to be used between `namespace`, `stage`, `name`, and `attributes` | string | `-` | no |
+| domain_enabled | A boolean that determines whether a DNS Zone for the kops domain is created | string | `true` | no |
 | force_destroy | A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without errors. These objects are not recoverable | string | `false` | no |
 | name | Name (e.g. `kops-state`) | string | `kops-state` | no |
-| namespace | Namespace (e.g. `cp` or `cloudposse`) | string | - | yes |
+| namespace | Namespace (e.g. `eg` or `cp`) | string | - | yes |
 | parent_zone_id | Parent DNS zone ID | string | `` | no |
 | parent_zone_name | Parent DNS zone name (e.g. `domain.com`) | string | `` | no |
 | region | AWS Region the S3 bucket should reside in | string | `us-east-1` | no |
