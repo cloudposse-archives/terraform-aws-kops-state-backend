@@ -68,6 +68,12 @@ variable "acl" {
   default     = "private"
 }
 
+variable "block_public_access_enabled" {
+  type        = "string"
+  description = "Block all public access from bucket level"
+  default     = "true"
+}
+
 variable "force_destroy" {
   type        = "string"
   description = "A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without errors. These objects are not recoverable"

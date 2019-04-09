@@ -1,10 +1,10 @@
-
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | acl | The canned ACL to apply to the S3 bucket | string | `private` | no |
 | attributes | Additional attributes (e.g. `1`) | list | `<list>` | no |
+| block_public_access_enabled | Block all public access from bucket level | string | `true` | no |
 | cluster_name | Kops cluster name (e.g. `us-east-1` or `cluster-1`) | string | `us-east-1` | no |
 | delimiter | Delimiter to be used between `namespace`, `stage`, `name`, and `attributes` | string | `-` | no |
 | domain_enabled | A boolean that determines whether a DNS Zone for the kops domain is created | string | `true` | no |

@@ -78,7 +78,7 @@ description: |-
 
   1. Forced server-side encryption at rest for the S3 bucket
   2. S3 bucket versioning to allow for `kops` state recovery in the case of accidental deletions or human errors
-
+  3. Block public access in bucket level by default
 
 # How to use this project
 usage: |-

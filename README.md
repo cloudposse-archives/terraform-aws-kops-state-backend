@@ -12,6 +12,7 @@ The module supports the following:
 
 1. Forced server-side encryption at rest for the S3 bucket
 2. S3 bucket versioning to allow for `kops` state recovery in the case of accidental deletions or human errors
+3. Block public access in bucket level by default
 
 
 ---
@@ -124,13 +125,13 @@ Available targets:
   lint                                Lint terraform code
 
 ```
-
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | acl | The canned ACL to apply to the S3 bucket | string | `private` | no |
 | attributes | Additional attributes (e.g. `1`) | list | `<list>` | no |
+| block_public_access_enabled | Block all public access from bucket level | string | `true` | no |
 | cluster_name | Kops cluster name (e.g. `us-east-1` or `cluster-1`) | string | `us-east-1` | no |
 | delimiter | Delimiter to be used between `namespace`, `stage`, `name`, and `attributes` | string | `-` | no |
 | domain_enabled | A boolean that determines whether a DNS Zone for the kops domain is created | string | `true` | no |
@@ -244,7 +245,7 @@ In general, PRs are welcome. We follow the typical "fork-and-pull" Git workflow.
 
 ## Copyright
 
-Copyright © 2017-2018 [Cloud Posse, LLC](https://cpco.io/copyright)
+Copyright © 2017-2019 [Cloud Posse, LLC](https://cpco.io/copyright)
 
 
 
