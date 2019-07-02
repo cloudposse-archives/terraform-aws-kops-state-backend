@@ -85,3 +85,9 @@ variable "domain_enabled" {
   default     = "true"
   description = "A boolean that determines whether a DNS Zone for the kops domain is created"
 }
+
+variable "create_bucket" {
+  type = "string"
+  default = "true"
+  description = "Set to `false` to use existing S3 bucket for kops state store instead of creating one."
+}

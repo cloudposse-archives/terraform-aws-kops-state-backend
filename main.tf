@@ -1,3 +1,10 @@
+provider "aws" {
+  version = "~> 2.17"
+
+  alias = "s3"
+  region = "${var.region}"
+}
+
 data "template_file" "zone_name" {
   template = "${replace(var.zone_name, "$$$$", "$")}"
 
@@ -10,6 +17,8 @@ data "template_file" "zone_name" {
 }
 
 locals {
+  create_s3_bucket = "${!(var.create_bucket == "false")}"
+
   tags = "${
       merge(
         var.tags,
@@ -45,7 +54,17 @@ module "s3_label" {
   tags       = "${local.tags}"
 }
 
+data "aws_s3_bucket" "default" {
+  provider = "aws.s3"
+
+  count = "${local.create_s3_bucket ? 0 : 1}"
+  bucket = "${module.s3_label.id}"
+}
+
 resource "aws_s3_bucket" "default" {
+  provider = "aws.s3"
+
+  count = "${local.create_s3_bucket ? 1 : 0}"
   bucket        = "${module.s3_label.id}"
   acl           = "${var.acl}"
   region        = "${var.region}"
@@ -67,7 +86,9 @@ resource "aws_s3_bucket" "default" {
 }
 
 resource "aws_s3_bucket_public_access_block" "default" {
-  count  = "${var.block_public_access_enabled == "true" ? 1 : 0}"
+  provider = "aws.s3"
+
+  count  = "${local.create_s3_bucket && var.block_public_access_enabled == "true" ? 1 : 0}"
   bucket = "${aws_s3_bucket.default.id}"
 
   block_public_acls       = true
