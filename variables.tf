@@ -87,7 +87,7 @@ variable "domain_enabled" {
 }
 
 variable "create_bucket" {
-  type = "string"
-  default = "true"
+  type        = "string"
+  default     = "true"
   description = "Set to `false` to use existing S3 bucket for kops state store instead of creating one."
 }

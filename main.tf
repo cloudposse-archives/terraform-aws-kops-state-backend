@@ -1,7 +1,7 @@
 provider "aws" {
   version = "~> 2.17"
 
-  alias = "s3"
+  alias  = "s3"
   region = "${var.region}"
 }
 
@@ -57,14 +57,14 @@ module "s3_label" {
 data "aws_s3_bucket" "default" {
   provider = "aws.s3"
 
-  count = "${local.create_s3_bucket ? 0 : 1}"
+  count  = "${local.create_s3_bucket ? 0 : 1}"
   bucket = "${module.s3_label.id}"
 }
 
 resource "aws_s3_bucket" "default" {
   provider = "aws.s3"
 
-  count = "${local.create_s3_bucket ? 1 : 0}"
+  count         = "${local.create_s3_bucket ? 1 : 0}"
   bucket        = "${module.s3_label.id}"
   acl           = "${var.acl}"
   region        = "${var.region}"
