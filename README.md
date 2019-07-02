@@ -54,6 +54,11 @@ We literally have [*hundreds of terraform modules*][terraform_modules] that are 
 
 ## Usage
 
+
+**IMPORTANT:** The `master` branch is used in `source` just as an example. In your code, do not pin to `master` because there may be breaking changes between releases.
+Instead pin to the release tag (e.g. `?ref=tags/x.y.z`) of one of our [latest releases](https://github.com/cloudposse/terraform-aws-kops-state-backend/releases).
+
+
 This example will create a DNS zone called `us-east-1.cloudxl.net` and delegate it from the parent zone `cloudxl.net` by setting `NS` and `SOA` records in the parent zone.
 
 It will also create an S3 bucket with the name `cp-prod-kops-state` for storing `kops` state.
@@ -133,6 +138,7 @@ Available targets:
 | attributes | Additional attributes (e.g. `1`) | list | `<list>` | no |
 | block_public_access_enabled | Block all public access from bucket level | string | `true` | no |
 | cluster_name | Kops cluster name (e.g. `us-east-1` or `cluster-1`) | string | `us-east-1` | no |
+| create_bucket | Set to `false` to use existing S3 bucket for kops state store instead of creating one. | string | `true` | no |
 | delimiter | Delimiter to be used between `namespace`, `stage`, `name`, and `attributes` | string | `-` | no |
 | domain_enabled | A boolean that determines whether a DNS Zone for the kops domain is created | string | `true` | no |
 | force_destroy | A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without errors. These objects are not recoverable | string | `false` | no |

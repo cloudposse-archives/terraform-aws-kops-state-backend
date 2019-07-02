@@ -6,6 +6,7 @@
 | attributes | Additional attributes (e.g. `1`) | list | `<list>` | no |
 | block_public_access_enabled | Block all public access from bucket level | string | `true` | no |
 | cluster_name | Kops cluster name (e.g. `us-east-1` or `cluster-1`) | string | `us-east-1` | no |
+| create_bucket | Set to `false` to use existing S3 bucket for kops state store instead of creating one. | string | `true` | no |
 | delimiter | Delimiter to be used between `namespace`, `stage`, `name`, and `attributes` | string | `-` | no |
 | domain_enabled | A boolean that determines whether a DNS Zone for the kops domain is created | string | `true` | no |
 | force_destroy | A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without errors. These objects are not recoverable | string | `false` | no |
